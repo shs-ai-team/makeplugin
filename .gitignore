@@ -1,0 +1,38 @@
+# ## General
+# Compiled source files, logs, and local caches
+*.log
+*.pyc
+__pycache__/
+.DS_Store
+
+# ## IDE & Editor Folders
+# VS Code
+.vscode/
+
+# ## Environment Variables
+# Never commit secrets or local environment variables
+.env
+.env.*
+!.env.example
+
+# ## Frontend (Node.js / React)
+# Node.js dependency folder
+/frontend/node_modules/
+
+# Build output
+/frontend/build/
+/frontend/.next/
+
+# Debug logs
+/frontend/npm-debug.log*
+/frontend/yarn-debug.log*
+/frontend/yarn-error.log*
+
+# ## Backend (Python / FastAPI)
+# Virtual environment folder
+/backend/.venv/
+/backend/venv/
+
+# ## Dev Container
+# Optional: If you want everyone to have their own devcontainer setup
+# .devcontainer/
