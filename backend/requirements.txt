@@ -1,0 +1,14 @@
+# --- Core Framework ---
+# Das FastAPI-Framework selbst
+fastapi
+
+# --- ASGI Server ---
+# Uvicorn ist der Server, der deine App ausführt.
+# [standard] installiert zusätzliche, empfohlene Abhängigkeiten 
+# für bessere Performance und Entwickler-Features wie Auto-Reload.
+uvicorn[standard]
+
+# --- Settings Management ---
+# Die moderne Art, Konfigurationen und Umgebungsvariablen (z.B. aus einer .env-Datei)
+# mit Pydantic zu verwalten. Sehr empfehlenswert für jedes Projekt.
+pydantic-settings
