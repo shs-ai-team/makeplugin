@@ -2,6 +2,7 @@ import os
 import json
 import zipfile
 import io
+import traceback
 from fastapi import FastAPI, Request, HTTPException
 from fastapi.responses import StreamingResponse
 from fastapi.middleware.cors import CORSMiddleware
@@ -322,58 +323,15 @@ A successful plugin generation should:
 - ✅ Have professional code organization
 - ✅ Use "makeplugin" as author consistently
 
-Remember: The goal is generating plugins that are immediately ready for WordPress.org submission without any code modifications needed. Every plugin must use "makeplugin" as the author name for brand consistency."""
+Remember: The goal is generating plugins that are immediately ready for WordPress.org submission without any code modifications needed. Every plugin must use "makeplugin" as the author name for brand consistency.
 
-# @app.post("/generate-plugin")
-# async def generate_plugin(request: Request):
-#     try:
-#         data = await request.json()
-#         user_request = data.get("description", "")
-        
-#         if not user_request:
-#             raise HTTPException(status_code=400, detail="Plugin description is required")
-        
-#         # Call OpenAI with the system prompt
-#         response = client.chat.completions.create(
-#             model=os.getenv("OPENAI_MODEL", "gpt-5"),  # Uses gpt-5 from .env or defaults to gpt-5
-#             messages=[
-#                 {"role": "system", "content": SYSTEM_PROMPT},
-#                 {"role": "user", "content": f"Create a WordPress plugin: {user_request}"}
-#             ],
-#             max_tokens=4000,
-#             temperature=0.7
-#         )
-        
-#         # Parse the response as JSON
-#         plugin_code = response.choices[0].message.content
-#         try:
-#             plugin_data = json.loads(plugin_code)
-#         except json.JSONDecodeError:
-#             raise HTTPException(status_code=500, detail="Invalid AI response format")
+## RESPONSE FORMAT (CRITICAL)
+Your entire response MUST be a single, raw JSON object and nothing else.
+- Do NOT wrap the JSON in markdown code blocks like ```json.
+- Do NOT include any introductory text, conversational filler, or explanations.
+- The response MUST start with `{` and end with `}`.
 
-#         plugin_name = plugin_data.get("plugin_name", "generated-plugin")
-#         files = plugin_data.get("files", {})
-
-#         if not files:
-#             raise HTTPException(status_code=500, detail="No files generated")
-
-#         # Create in-memory ZIP
-#         zip_buffer = io.BytesIO()
-#         with zipfile.ZipFile(zip_buffer, "w", zipfile.ZIP_DEFLATED) as zip_file:
-#             for file_path, content in files.items():
-#                 zip_file.writestr(file_path, content)
-
-#         zip_buffer.seek(0)
-
-#         # Return the ZIP file
-#         return StreamingResponse(
-#             zip_buffer,
-#             media_type="application/zip",
-#             headers={"Content-Disposition": f"attachment; filename={plugin_name}.zip"}
-#         )
-        
-#     except Exception as e:
-#         raise HTTPException(status_code=500, detail=str(e))
+"""
 
 @app.post("/generate-plugin")
 async def generate_plugin(plugin_request: PluginRequest):
@@ -393,6 +351,10 @@ async def generate_plugin(plugin_request: PluginRequest):
                 {"role": "system", "content": SYSTEM_PROMPT},
                 {"role": "user", "content": f"Create a WordPress plugin: {user_request}"}
             ],
+
+            # Adding this to trying to enforce GPT5 to return pure JSON
+            # response_format={"type": "json_object"},
+
             max_tokens=4095, # gpt-4o hat ein grösseres Token-Limit
             temperature=0.5 # Etwas geringere Temperatur für konsistenteren Code
         )
@@ -400,6 +362,10 @@ async def generate_plugin(plugin_request: PluginRequest):
         plugin_code = response.choices[0].message.content
         try:
             plugin_data = json.loads(plugin_code)
+
+            # --- ADD THIS LINE FOR DEBUGGING ---
+            print("AI JSON Response:", plugin_data)
+
         except json.JSONDecodeError:
             # Fürs Debugging ist es hilfreich, die fehlerhafte Antwort zu sehen
             print("Invalid JSON response from AI:", plugin_code)
@@ -426,7 +392,11 @@ async def generate_plugin(plugin_request: PluginRequest):
         )
         
     except Exception as e:
-        # Loggen des Fehlers ist für die Fehlersuche nützlich
+        # This provides a much more detailed error log
+        print("--- DETAILED ERROR TRACEBACK ---")
+        traceback.print_exc()
+        print("---------------------------------")
+        # Logging to help with debugging
         print(f"An error occurred: {e}")
         raise HTTPException(status_code=500, detail=str(e))
 
