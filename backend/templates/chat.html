@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>WP Consultant Chat</title>
+</head>
+<body>
+    <h1>WordPress Consultant Chat</h1>
+
+    <form action="/send" method="post">
+        <input type="text" name="message" placeholder="Your message" style="width:400px;">
+        <button type="submit">Send</button>
+    </form>
+
+    <form action="/new_chat" method="post" style="margin-top:10px;">
+        <button type="submit">New Chat</button>
+    </form>
+
+    <div style="margin-top:20px;">
+        {% for sender, msg in chat_history %}
+            <p><b>{{ sender }}:</b> {{ msg }}</p>
+        {% endfor %}
+    </div>
+</body>
+</html>
