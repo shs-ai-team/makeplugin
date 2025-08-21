@@ -30,7 +30,7 @@ class Session:
             data = json.load(f)
 
             self.id_ = session_id
-            self.messages = data.get("messages", [])
+            self.messages = data.get("messages")
 
     def _create_new_session(self):
         self.id_ = str(uuid.uuid4())

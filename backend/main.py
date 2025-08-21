@@ -1,6 +1,7 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, BackgroundTasks
 from fastapi.middleware.cors import CORSMiddleware
 from uuid import UUID
+import json
 
 from session import Session
 from models import (
@@ -11,7 +12,10 @@ from models import (
     DevResponseNotReady,
     DevResponseReady,
     UserMessage,
+    ConsultantMessage,
 )
+from wordpress_consultant_agent import WordPressConsultantAgent
+from wordpress_developer_agent import WordpressDeveloperAgent   
 
 app = FastAPI()
 
@@ -31,7 +35,6 @@ def create_session():
     '''
     Creates a new plugin generation chat session and returns it
     '''
-
     session = Session()
     return CreateSessionResponse(
         session_id=session.id_,
@@ -57,15 +60,28 @@ def get_session(session_id: UUID):
     )
 
 @app.post("/session/{session_id}/consultant_response", response_model=ConsultantResponse)
-def consultant_response(session_id: UUID, user_input: UserInputRequest):
+def consultant_response(session_id: UUID, user_input: UserInputRequest, background_tasks: BackgroundTasks):
     
-    # get the session
     session = Session(session_id=str(session_id))
 
-    # Add user message to session
-    user_message = UserMessage(user_input.message)
-    session.add_message(role=user_message.role, content=user_message.content)
+    ai_response: dict = WordPressConsultantAgent.consult(user_message=user_input.message, session=session)
 
-    # Consult
-    ai_response = 
+    requirements_finalized: bool = ai_response["requirements_finalized"] == True
+    
+    if requirements_finalized:
+        requirements = ai_response["requirements"]
+
+        # start development through developer agent asyncronously
+        background_tasks.add_task(WordpressDeveloperAgent.generate_plugin_files, requirements)
+    
+    return ConsultantResponse(
+        message=ConsultantMessage(
+            content=str(json.dumps(ai_response, indent=2)),
+            requirements_finalized=requirements_finalized,
+        )
+    )
+
+    
+
+
 

@@ -1,4 +1,4 @@
-from pydantic import BaseModel, Field
+from pydantic import BaseModel
 from typing import List, Optional, Literal
 from uuid import UUID
 
@@ -9,15 +9,20 @@ class ConsultantMessage(BaseModel):
     requirements_finalized: bool = False
 
 
+class DeveloperMessage(BaseModel):
+    role: Literal["developer"] = "developer"
+    content: str
+    zip_id: int
+
+
 class UserMessage(BaseModel):
     role: Literal["user"] = "user"
     content: str
 
 
-class DeveloperMessage(BaseModel):
-    role: Literal["developer"] = "developer"
+class SystemMessage(BaseModel):
+    role: Literal["system"] = "system"
     content: str
-    zip_id: int
 
 ChatMessage = ConsultantMessage | UserMessage | DeveloperMessage  # polymorphic message type
 

@@ -17,7 +17,11 @@ class AI:
         # Adjust messages to OpenAI format
         for idx, message in enumerate(messages):
             messages[idx] = {
-                "role": message["role"].replace("consultant", "assistant"),
+
+                "role": message["role"]\
+                    .replace("consultant", "assistant")\
+                    .replace("developer", "assistant"),
+                    
                 "content": message["content"],
             }
 
