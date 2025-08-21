@@ -1,3 +1,8 @@
+
+# Developer plugin generation status endpoint
+from models import DevResponseNotReady, DevResponseReady, DeveloperMessage
+
+
 from fastapi import FastAPI, BackgroundTasks
 from fastapi.middleware.cors import CORSMiddleware
 from uuid import UUID
@@ -68,20 +73,41 @@ def consultant_response(session_id: UUID, user_input: UserInputRequest, backgrou
 
     requirements_finalized: bool = ai_response["requirements_finalized"] == True
     
+    print(f"LOG: Requirements finalized: {requirements_finalized}.")
     if requirements_finalized:
         requirements = ai_response["requirements"]
 
         # start development through developer agent asyncronously
+        print(f"LOG: Begining AI dev task")
         background_tasks.add_task(WordpressDeveloperAgent.generate_plugin_files, requirements)
     
     return ConsultantResponse(
         message=ConsultantMessage(
             content=str(json.dumps(ai_response, indent=2)),
             requirements_finalized=requirements_finalized,
-        )
+        ),
     )
 
     
 
 
+@app.post("/session/{session_id}/dev_response", response_model=None)
+def dev_response(session_id: UUID):
+    """
+    Checks if the developer has finished generating the plugin zip for this session.
+    Returns {"success": false} if not ready, or {"success": true, message: {...}} if ready.
+    """
+    session = Session(session_id=str(session_id))
+    messages = session.get_messages()
 
+    if not messages:
+        return DevResponseNotReady()
+
+    latest_message = messages[-1]
+    if latest_message["role"] != "developer":
+        return DevResponseNotReady()
+    
+    return DevResponseReady(message=DeveloperMessage(
+            content=latest_message["content"],
+            zip_id=latest_message["zip_id"]
+        ))

@@ -82,15 +82,23 @@ class Session:
 
     def add_development_result(self, plugin_files: dict):
 
-        # Save plugin files as zip to session folder
-        generation_id = self.save_plugin_files_zip(self.session_folder, plugin_files)
+        if plugin_files == {}:
+            # Add (failiure) developer role message
+            self.add_message(
+                role="developer",
+                content="Sorry I was unable to create the files, please try again.",
+                zip_id=-1,
+            )
+        else:
+            # Save plugin files as zip to session folder
+            generation_id = self.save_plugin_files_zip(self.session_folder, plugin_files)
 
-        # Add developer role message
-        self.add_message(
-            role="developer",
-            content="I've created your plugin, packaged as a zip, ready to download and install!",
-            zip_id=generation_id,
-        )
+            # Add developer role message
+            self.add_message(
+                role="developer",
+                content="I've created your plugin, packaged as a zip, ready to download and install!",
+                zip_id=generation_id,
+            )
 
     @classmethod
     def get_all_sessions(cls):

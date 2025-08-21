@@ -25,6 +25,9 @@ class AI:
                 "content": message["content"],
             }
 
+        print("LOG: calling AI with following messages:")
+        print(f"LOG: {list((messages))}")
+
         completion = cls.api.chat.completions.create(
             model="openai/gpt-5-2025-08-07",
             messages=messages,
@@ -33,6 +36,9 @@ class AI:
             max_completion_tokens=10000
         )
         response = completion.choices[0].message.content
+        print("LOG: Receieved AI response:")
+        print(f"LOG: {completion}")
+
         return response    
 
     @classmethod

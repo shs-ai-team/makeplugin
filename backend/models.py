@@ -48,10 +48,10 @@ class ConsultantResponse(BaseModel):
 
 
 class DevResponseNotReady(BaseModel):
-    success: Literal[False]
+    success: Literal[False] = False
     
 class DevResponseReady(BaseModel):
-    success: Literal[True]
+    success: Literal[True] = True
     message: DeveloperMessage
 
 

@@ -23,7 +23,11 @@ class WordPressConsultantAgent:
         response = AI.get_response(messages)
 
         # Strip the response of any extra formatting and parse it as JSON
-        response_json = response.strip().split("```json")[-1].split("```")[0].strip()
+        if "```json" in response:
+            response_json = response.strip().split("```json")[-1].split("```")[0].strip()
+        else:
+            response_json = response.strip().split("```")[-1].split("```")[0].strip()
+
         try:
             response_json = json.loads(response_json)
         except json.JSONDecodeError:
@@ -35,7 +39,12 @@ class WordPressConsultantAgent:
         
         # self.messages.append({"role": "consultant", "content": response})
         # Add new AI response to session
-        session.add_message(ConsultantMessage(content=f"```json\n{json.dumps(response_json, indent=2)}```"))
+        new_message = ConsultantMessage(content=f"```json\n{json.dumps(response_json, indent=2)}```", requirements_finalized=response_json["requirements_finalized"])
+        session.add_message(
+            role=new_message.role,
+            content=new_message.content,
+            requirements_finalized=new_message.requirements_finalized
+        )
 
         return response_json
     
