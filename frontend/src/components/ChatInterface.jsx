@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import './ChatInterface.css'; // We'll create this for styling
+import { generatePlugin } from '../api';
 
 const ChatInterface = () => {
   const [prompt, setPrompt] = useState('');
@@ -14,21 +15,8 @@ const ChatInterface = () => {
     setDownloadUrl(null);
 
     try {
-      const response = await fetch('http://localhost:8000/generate-plugin', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ description: prompt }),
-      });
-
-      if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.detail || 'An unknown error occurred');
-      }
-
-      // Handle the file download
-      const blob = await response.blob();
+      const blob = await generatePlugin(prompt);
+      
       const url = window.URL.createObjectURL(blob);
       setDownloadUrl(url);
 
