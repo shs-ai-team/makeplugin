@@ -13,6 +13,14 @@ class AI:
 
     @classmethod
     def get_response(cls, messages):
+        
+        # Adjust messages to OpenAI format
+        for idx, message in enumerate(messages):
+            messages[idx] = {
+                "role": message["role"].replace("consultant", "assistant"),
+                "content": message["content"],
+            }
+
         completion = cls.api.chat.completions.create(
             model="openai/gpt-5-2025-08-07",
             messages=messages,

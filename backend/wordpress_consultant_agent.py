@@ -8,9 +8,9 @@ class WordPressConsultantAgent:
             {"role": "system", "content": wordpress_consultant_agent_system_prompt}
         ]
 
-
     def consult(self, user_message):
         self.messages.append({"role": "user", "content": user_message})
+        
         response = AI.get_response(self.messages)
 
         # Strip the response of any extra formatting and parse it as JSON
@@ -25,7 +25,7 @@ class WordPressConsultantAgent:
                 "response_to_user": "There was an error processing your request. Please try again."
             }
         
-        self.messages.append({"role": "assistant", "content": response})
+        self.messages.append({"role": "consultant", "content": response})
         return response_json
     
     def get_requirements(self):

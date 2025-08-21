@@ -3,7 +3,6 @@ import json
 import uuid
 import zipfile
 
-from datetime import datetime
 
 class Session:
     SESSIONS_DIR = "sessions"  # folder to store session JSON files
@@ -38,7 +37,7 @@ class Session:
         self.session_folder = os.path.join(self.SESSIONS_DIR, self.id_)
         os.makedirs(self.session_folder, exist_ok=True)
         self.messages = [
-            {"role": "assistant", "content": "Hi, I am Plugin Pal - your WordPress plugin assistant!\n To begin, please describe the plugin you want to create."}
+            {"role": "consultant", "content": "Hi, I am Plugin Pal - your WordPress plugin assistant!\n To begin, please describe the plugin you want to create."}
         ]
         self.save_messages()
 
@@ -87,9 +86,34 @@ class Session:
         generation_id = self.save_plugin_files_zip(self.session_folder, plugin_files)
 
         # Add developer role message
-        self.add_message({
-            "role": "developer",
-            "message": "I've created your plugin, packaged as a zip, ready to download and install!",
-            "zip_id": generation_id,
-        })
+        self.add_message(
+            role="developer",
+            content="I've created your plugin, packaged as a zip, ready to download and install!",
+            zip_id=generation_id,
+        )
+
+    @classmethod
+    def get_all_sessions(cls):
+        sessions = []
+        if not os.path.exists(cls.SESSIONS_DIR):
+            return sessions
+
+        for session_id in os.listdir(cls.SESSIONS_DIR):
+            session_folder = os.path.join(cls.SESSIONS_DIR, session_id)
+            messages_path = os.path.join(session_folder, "messages.json")
+            session_data = {"id": session_id, "messages": []}
+            if os.path.exists(messages_path):
+                try:
+                    with open(messages_path, "r") as f:
+                        data = json.load(f)
+                        session_data["messages"] = data.get("messages", [])
+                except Exception:
+                    pass
+            sessions.append(session_data)
+
+        return sessions
+
+
+
+
 
