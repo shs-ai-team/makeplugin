@@ -1,12 +1,15 @@
-import React from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import LoadingPage from './components/LoadingPage';
-import './App.css';
+import PluginGeneratorPage from './components/PluginGeneratorPage';
 
 function App() {
   return (
-    <div className="App">
-      <LoadingPage />
-    </div>
+    <Router>
+      <Routes>
+        <Route path="/" element={<LoadingPage />} />
+        <Route path="/plugin-generator" element={<PluginGeneratorPage />} />
+      </Routes>
+    </Router>
   );
 }
 
