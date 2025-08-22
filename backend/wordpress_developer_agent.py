@@ -3,7 +3,7 @@ from ai import AI
 from prompts import wordpress_developer_agent_system_prompt, wordpress_developer_agent_user_prompt_template
 from session import Session
 from models import UserMessage
-
+from wordpress_consultant_agent import WordPressConsultantAgent
 
 
 class WordpressDeveloperAgent:
@@ -15,8 +15,8 @@ class WordpressDeveloperAgent:
     def generate_plugin_files(requirements: dict, session: Session):
 
         # form developer agent user prompt from template
-        wp_dev_agent_user_message = wordpress_developer_agent_user_prompt_template.format(
-            plugin_requirements=json.dumps(requirements, indent=2)
+        wp_dev_agent_user_message = wordpress_developer_agent_user_prompt_template.substitute(
+            plugin_requirements=requirements
         )
 
         # form messages for AI call
@@ -52,5 +52,9 @@ class WordpressDeveloperAgent:
             print("LOG: Failed to extract JSON from plugin developer agent response.")
             plugin_files = {}
             # return {"success": False, "error": "Invalid response format"}
+
         
-        session.add_development_result(plugin_files)
+        usage_instructions = WordPressConsultantAgent.get_usage_instructions(plugin_files)
+        
+        session.add_development_result(plugin_files, usage_instructions)
+

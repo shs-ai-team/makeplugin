@@ -80,7 +80,7 @@ class Session:
 
         return generation_id
 
-    def add_development_result(self, plugin_files: dict):
+    def add_development_result(self, plugin_files: dict, usage_instructions: str=None):
 
         if plugin_files == {}:
             # Add (failiure) developer role message
@@ -94,9 +94,10 @@ class Session:
             generation_id = self.save_plugin_files_zip(self.session_folder, plugin_files)
 
             # Add developer role message
+            dev_message = f"I've created your plugin, packaged as a zip, ready to download and install!. Here are some instructions on how to get started with it:\n{usage_instructions}"
             self.add_message(
                 role="developer",
-                content="I've created your plugin, packaged as a zip, ready to download and install!",
+                content=dev_message,
                 zip_id=generation_id,
             )
 

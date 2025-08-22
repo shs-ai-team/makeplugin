@@ -1,6 +1,10 @@
 import json
 from ai import AI
-from prompts import wordpress_consultant_agent_system_prompt
+from prompts import (
+    wordpress_consultant_agent_system_prompt,
+    wordpress_plugin_usage_instructions_generator_system_prompt,
+    wordpress_plugin_usage_instructions_generator_user_prompt_template
+)
 from models import SystemMessage, UserMessage, ConsultantMessage
 from session import Session
 
@@ -48,14 +52,55 @@ class WordPressConsultantAgent:
 
         return response_json
     
-    def get_requirements(self):
-        """
-        Returns the current requirements as a JSON object.
-        """
-        last_response = self.messages[-1]["content"]
-        try:
-            response_json = json.loads(last_response.strip().split("```json")[-1].split("```")[0].strip())
-            return response_json.get("requirements", {})
-        except (json.JSONDecodeError, IndexError):
-            return {}
+    # def get_requirements(self):
+    #     """
+    #     Returns the current requirements as a JSON object.
+    #     """
+    #     last_response = self.messages[-1]["content"]
+    #     try:
+    #         response_json = json.loads(last_response.strip().split("```json")[-1].split("```")[0].strip())
+    #         return response_json.get("requirements", {})
+    #     except (json.JSONDecodeError, IndexError):
+    #         return {}
+
+
+    @staticmethod
+    def get_usage_instructions(plugin_files: dict) -> str:
+        # Prepare the messages for the AI call
+        messages = [
+            {"role": "system", "content": wordpress_plugin_usage_instructions_generator_system_prompt},
+            {"role": "user", "content": wordpress_plugin_usage_instructions_generator_user_prompt_template.substitute(plugin_files=plugin_files)}
+        ]
+
+        # Call the AI to generate usage instructions
+        usage_instructions = AI.get_response(messages=messages)
+
+        # Return the generated usage instructions
+        return usage_instructions
+            
         
+            
+
+# if __name__ == "__main__":
+    
+#     with open("eg_plugin_response.txt", "r") as f:
+#         response = f.read()
+
+    
+#     print("Extracting JSON")
+#     response = response.strip().split("## Plugin Files")[1]
+#     if "```json" in response:
+#         response_json = response.strip().split("```json")[-1].split("```")[0].strip()
+#     else:
+#         response_json = response.strip().split("```")[-1].split("```")[0].strip()
+
+#     print(response_json)
+#     exit()
+#     response_json = json.loads(response_json
+#     print("Extracted. Calling AI")
+#     print(response_json)
+
+#     # usage_instructions = WordPressConsultantAgent.get_usage_instructions(response_json) 
+
+#     # print("AI response recieved:\n\n")
+#     # print(usage_instructions)

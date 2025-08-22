@@ -15,25 +15,26 @@ class AI:
     def get_response(cls, messages):
         
         # Adjust messages to OpenAI format
-        for idx, message in enumerate(messages):
-            messages[idx] = {
+        messages_openai_format = []
+        for message in messages:
+            role = message["role"]
+            content = message["content"]
 
-                "role": message["role"]\
-                    .replace("consultant", "assistant")\
-                    .replace("developer", "assistant"),
-                    
-                "content": message["content"],
-            }
+            if role in ("consultant", "developer"):
+                role = "assistant"
+
+            messages_openai_format.append({"role": role, "content": content})
 
         print("LOG: calling AI with following messages:")
         print(f"LOG: {list((messages))}")
 
         completion = cls.api.chat.completions.create(
             model="openai/gpt-5-2025-08-07",
-            messages=messages,
+            messages=messages_openai_format,
             temperature=0.2,
             verbosity="high",
-            max_completion_tokens=10000
+            max_completion_tokens=10000,
+            reasoning_effort="low",
         )
         response = completion.choices[0].message.content
         print("LOG: Receieved AI response:")

@@ -79,7 +79,7 @@ def consultant_response(session_id: UUID, user_input: UserInputRequest, backgrou
 
         # start development through developer agent asyncronously
         print(f"LOG: Begining AI dev task")
-        background_tasks.add_task(WordpressDeveloperAgent.generate_plugin_files, requirements)
+        background_tasks.add_task(WordpressDeveloperAgent.generate_plugin_files, requirements, session)
     
     return ConsultantResponse(
         message=ConsultantMessage(
