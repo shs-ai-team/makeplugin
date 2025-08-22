@@ -11,7 +11,7 @@ from openai import AsyncOpenAI, APIError
 from dotenv import load_dotenv
 from pydantic import field_validator, ValidationError, BaseModel, Json
 from typing import Dict
-from prompt_config_small import SYSTEM_PROMPT
+from prompt_config import SYSTEM_PROMPT
 
 # Pydantic model for validating the AI's JSON response
 class AIResponse(BaseModel):
