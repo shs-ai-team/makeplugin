@@ -394,3 +394,22 @@
     font-size: 1.5rem;
   }
 }
+
+
+.skeleton-line {
+  height: 16px;
+  background: linear-gradient(90deg, #ccc 25%, #bbb 50%, #ccc 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.2s infinite;
+  margin-bottom: 8px;
+  border-radius: 4px;
+}
+
+.skeleton-line.short {
+  width: 60%;
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}

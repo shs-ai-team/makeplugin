@@ -3,6 +3,9 @@ import './PluginGeneratorPage.css';
 // 👇 1. Import all our API service functions
 import * as api from '../apiService';
 
+import ReactMarkdown from 'react-markdown';
+
+
 const PluginGeneratorPage = () => {
     const [isSidebarOpen, setIsSidebarOpen] = useState(true);
     const [isMobile, setIsMobile] = useState(false);
@@ -118,7 +121,7 @@ const PluginGeneratorPage = () => {
             const downloadUrl = api.getPluginDownloadUrl(sessionId, msg.zip_id);
             return (
                 <>
-                    {msg.content}
+                    <ReactMarkdown> {msg.content} </ReactMarkdown>
                     <a href={downloadUrl} className="download-button" download>
                         Download Plugin (.zip)
                     </a>
@@ -169,7 +172,13 @@ const PluginGeneratorPage = () => {
                             {renderMessageContent(msg)}
                         </div>
                     ))}
-                    {isLoading && <div className="response-box"><span></span></div>}
+                    {/* {isLoading && <div className="response-box"><span></span></div>} */}
+                    {isLoading && (
+                        <div className="response-box skeleton">
+                            <div className="skeleton-line"></div>
+                            <div className="skeleton-line short"></div>
+                        </div>
+                    )}
                 </div>
 
                 <div className="input-wrapper">
