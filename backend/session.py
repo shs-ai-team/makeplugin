@@ -111,7 +111,26 @@ class Session:
             )
 
     @classmethod
-    def get_all_sessions(cls):
+    def get_all_session_ids(cls):
+        """
+        Returns a list of all session UUIDs.
+        """
+        session_ids = []
+        if not os.path.exists(cls.SESSIONS_DIR):
+            return session_ids
+
+        for session_id in os.listdir(cls.SESSIONS_DIR):
+            session_folder = os.path.join(cls.SESSIONS_DIR, session_id)
+            if os.path.isdir(session_folder):
+                session_ids.append(session_id)
+
+        return session_ids
+
+    @classmethod
+    def get_all_session_data(cls):
+        """
+        Returns full session data including id and messages 
+        """
         sessions = []
         if not os.path.exists(cls.SESSIONS_DIR):
             return sessions

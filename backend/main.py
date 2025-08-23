@@ -49,7 +49,7 @@ def create_session():
 
 @app.get("/sessions")
 def get_all_sessions():
-    return Session.get_all_sessions()
+    return Session.get_all_session_ids()
 
 
 @app.get("/session/{session_id}", response_model=GetSessionResponse)
@@ -84,8 +84,6 @@ def consultant_response(session_id: UUID, user_input: UserInputRequest, backgrou
     return ConsultantResponse(
         message=ai_response,
     )
-
-    
 
 
 @app.post("/session/{session_id}/dev_response", response_model=None)
