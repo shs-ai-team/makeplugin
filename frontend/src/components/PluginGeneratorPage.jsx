@@ -135,10 +135,11 @@ const PluginGeneratorPage = () => {
                 <aside className={`sidebar ${isSidebarOpen && isMobile ? 'mobile-visible' : ''}`}>
                     <div className="sidebar-top">
                         <h2 className="logo">MakePlugin</h2>
-                        <button className="new-chat" onClick={handleResetChat}>New Chat</button>
+                        <button className="new-chat" onClick={handleResetChat}>New Plugin Generation</button>
                     </div>
                     <div className="recent-chats">
-                        <h3>Recent Chats</h3>
+                        {/* <h3>Recent Chats</h3> */}
+                        <h3>Recent Plugin Generations </h3>
                         <ul>
                             <li><span className="chat-icon">💬</span> Contact Form Plugin <span className="time">2h ago</span></li>
                             <li><span className="chat-icon">📅</span> Event Calendar <span className="time">1d ago</span></li>
@@ -152,13 +153,13 @@ const PluginGeneratorPage = () => {
             <main className={`main ${isSidebarOpen && isMobile ? 'hide-on-mobile' : ''}`}>
                 <div className="plugin-header-box">
                     <div className="header">
-                        <h1>Plugin Generator</h1>
+                        <h1>Plugin Generation </h1>
                         <span className="plugin-count">23 plugins remaining this month</span>
                         {isMobile && (
                             <button className="toggle-sidebar" onClick={() => setIsSidebarOpen(prev => !prev)}>☰</button>
                         )}
                     </div>
-                    <p className="subtitle">Describe your plugin and I'll build it for you</p>
+                    <p className="subtitle">Talk to our consultant below to discuss your requirements.</p>
                 </div>
 
                 {/* 👇 7. Updated chat container to use 'messages' state */}

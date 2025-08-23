@@ -47,6 +47,12 @@
         "description": "Flexible bill split calculator with tip, tax, and custom shares",
         "details": "Add a mobile-friendly bill splitter where visitors enter bill total, optional tax (included or %), choose a tip %, and number of people. Supports equal split or fully custom shares by amount or percentage per person, with validation so totals match. Shows a clear summary: subtotal, tax, tip, grand total, and each person\u2019s share. Includes optional round up/down per person or overall, and an optional service charge line. Currency symbol follows the site locale. Admin can set default tip choices (e.g., 10%, 15%, 20%), default tax handling, enable/disable custom shares and rounding, customize labels/placeholders, and choose where it appears. Instant updates as values change."
       }
+    },
+    {
+      "role": "developer",
+      "content": "Sorry I was unable to create the files, please try again.",
+      "zip_id": -1,
+      "raw_response": ""
     }
   ]
 }
