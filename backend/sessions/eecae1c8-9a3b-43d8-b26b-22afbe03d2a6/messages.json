@@ -1,0 +1,52 @@
+{
+  "messages": [
+    {
+      "role": "consultant",
+      "content": "Hi, I am Plugin Pal - your WordPress plugin assistant!\n To begin, please describe the plugin you want to create.",
+      "requirements": {},
+      "requirements_finalized": false
+    },
+    {
+      "role": "user",
+      "content": "Can we make a calculator?"
+    },
+    {
+      "role": "consultant",
+      "content": "Absolutely\u2014what kind of calculator do you have in mind? For example: loan/mortgage, price quote, ROI, BMI, tax/VAT, savings, unit converter, date/duration, or a custom formula. Please share the inputs you want, what the result should show, and where you\u2019d like it on your site.",
+      "requirements_finalized": false,
+      "requirements": {
+        "name": "Site Calculator",
+        "description": "A calculator for visitors on your site",
+        "details": "Create a simple, clean calculator that visitors can use on a page. Exact calculator type and fields are not yet defined. Results should display instantly after the user enters values. Works well on mobile and desktop. Minimal styling to match the site\u2019s look. Admin can set labels, default values, and a short result message. Placement on a chosen page/section."
+      }
+    },
+    {
+      "role": "user",
+      "content": "A share calculator for friends etc when they go to restruants"
+    },
+    {
+      "role": "consultant",
+      "content": "Great idea! Do you want it to handle uneven splits (e.g., one person pays more) or just equal splits? Also, any preferred default tip options (for example 10%, 15%, 20%)?",
+      "requirements_finalized": false,
+      "requirements": {
+        "name": "Restaurant Bill Splitter",
+        "description": "Split a restaurant bill among friends with tip and tax",
+        "details": "Provide a clean bill-splitting tool for a page where visitors enter bill total, optional tax %, choose a tip %, and set number of people. Support two modes: split equally or use custom shares (percent or amount) to handle uneven contributions. Show per-person totals including tax and tip, with an optional round-up/down toggle. Mobile-friendly, fast updates as values change, and simple styling that matches the site. Admin can set default tip choices, default tax handling (included or %), enable/disable custom shares, rounding options, labels/placeholders, and where it appears on the site."
+      }
+    },
+    {
+      "role": "user",
+      "content": "Yess make it very flexible"
+    },
+    {
+      "role": "consultant",
+      "content": "Perfect\u2014we\u2019ll make it very flexible with equal or custom splits, tip, tax, rounding, and a clear per-person summary. I\u2019ve got everything I need; I\u2019ll start the plugin generation now\u2014please sit tight.",
+      "requirements_finalized": true,
+      "requirements": {
+        "name": "Restaurant Bill Splitter",
+        "description": "Flexible bill split calculator with tip, tax, and custom shares",
+        "details": "Add a mobile-friendly bill splitter where visitors enter bill total, optional tax (included or %), choose a tip %, and number of people. Supports equal split or fully custom shares by amount or percentage per person, with validation so totals match. Shows a clear summary: subtotal, tax, tip, grand total, and each person\u2019s share. Includes optional round up/down per person or overall, and an optional service charge line. Currency symbol follows the site locale. Admin can set default tip choices (e.g., 10%, 15%, 20%), default tax handling, enable/disable custom shares and rounding, customize labels/placeholders, and choose where it appears. Instant updates as values change."
+      }
+    }
+  ]
+}
