@@ -1,0 +1,38 @@
+{
+  "messages": [
+    {
+      "role": "consultant",
+      "content": "Hi, I am Plugin Pal - your WordPress plugin assistant!\n To begin, please describe the plugin you want to create.",
+      "requirements": {},
+      "requirements_finalized": false
+    },
+    {
+      "role": "user",
+      "content": "Can you make a plugin to show a notice that only admins may  edit"
+    },
+    {
+      "role": "consultant",
+      "content": "Got it. Should this notice appear only on the dashboard editing screens, or also site\u2011wide or on the front end? Do you want it shown to all non-admin logged-in users, and is the default text \u201cOnly administrators may edit\u201d okay, always visible (not dismissible)?",
+      "requirements_finalized": false,
+      "requirements": {
+        "name": "Admin Edit Notice",
+        "description": "Shows a notice that only admins may edit.",
+        "details": "Display a clear notice to non-admin users indicating that only administrators may edit. By default, show a prominent banner at the top of content editing screens in the dashboard (e.g., post/page editor) for any logged-in user who is not an Administrator. The plugin does not change permissions or block editing; it only shows the notice. Default message: \u201cOnly administrators may edit.\u201d The notice is always visible (not dismissible)."
+      }
+    },
+    {
+      "role": "user",
+      "content": "I want it to be like a notcieboard from admin and i can paset via shortcode"
+    },
+    {
+      "role": "consultant",
+      "content": "Great\u2014I'll set up an admin noticeboard you can paste into any page or post with a small tag. Quick check: do you want just one message or a list of multiple messages, and should it show to everyone or only logged\u2011in users?",
+      "requirements_finalized": false,
+      "requirements": {
+        "name": "Noticeboard Widget",
+        "description": "Admin-managed noticeboard that you can place anywhere.",
+        "details": "Provide a simple noticeboard that site admins can manage from the dashboard and display anywhere using a small tag placed in content. Include a settings screen for admins with fields for a notice title and message, and a toggle to enable/disable display. The front-end output shows a simple styled box with the title (if set) and message. By default, the notice shows to all visitors. Only admins can edit the notice. Keep styling minimal and neutral, with a prominent header and body text."
+      }
+    }
+  ]
+}

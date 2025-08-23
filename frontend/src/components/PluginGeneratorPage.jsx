@@ -141,7 +141,6 @@ const PluginGeneratorPage = () => {
                         <button className="new-chat" onClick={handleResetChat}>New Plugin Generation</button>
                     </div>
                     <div className="recent-chats">
-                        {/* <h3>Recent Chats</h3> */}
                         <h3>Recent Plugin Generations </h3>
                         <ul>
                             <li><span className="chat-icon">💬</span> Contact Form Plugin <span className="time">2h ago</span></li>
@@ -172,7 +171,6 @@ const PluginGeneratorPage = () => {
                             {renderMessageContent(msg)}
                         </div>
                     ))}
-                    {/* {isLoading && <div className="response-box"><span></span></div>} */}
                     {isLoading && (
                         <div className="response-box skeleton">
                             <div className="skeleton-line"></div>

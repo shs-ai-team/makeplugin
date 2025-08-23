@@ -237,6 +237,15 @@
   background-color: #005fa3;
 }
 
+.generate-button:disabled {
+  opacity: 0.5;         
+  cursor: not-allowed;   
+  transform: none;  
+  box-shadow: none;
+  background-color: #ccc;
+  color: #666;
+}
+
 .toggle-sidebar {
   position: absolute;
   top: 0;
@@ -256,7 +265,7 @@
   width: 100%;
   background-color: var(--bg-color);
   border-bottom: 1px solid #f3f3f3;
-  padding: 1.5rem;
+  padding: 1rem;
   box-shadow: 0 2px 6px var(--shadow-color);
   box-sizing: border-box;
   z-index: var(--modal-z);
