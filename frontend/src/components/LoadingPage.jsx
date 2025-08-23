@@ -13,14 +13,14 @@ const LoadingPage = () => {
     <section className="loading-page">
       <div className="loading-text">
         <h1>Create a WordPress plugin without writing code</h1>
-        <p>Quick explanation of how the tool works.</p>
+        <p>Your friendly WordPress Plugin Assistant. Describe your desired function and receive a finished plugin as a ZIP file for download.</p>
         <button className="cta-button" onClick={handleStart}>
           Start creating your plugin
         </button>
       </div>
       <div className="loading-illustration">
         <img
-          src="https://bing.com/th/id/BCO.61acdfeb-79c6-44d0-bde8-9324bb6cfa6d.png"
+          src="./makeplugin_logo.png"
           alt="AI chatbot with headset and WordPress logo"
           className="illustration-image"
         />
