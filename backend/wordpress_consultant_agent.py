@@ -93,11 +93,16 @@ class WordPressConsultantAgent:
 
         # Call the AI to generate usage instructions
         usage_instructions = AI.get_response(messages=messages)
+        
+        # Parse and clean AI response
+        instructions_heading_index = usage_instructions.find("# Instructions")
+        if instructions_heading_index != -1:
+            usage_instructions = usage_instructions[instructions_heading_index + len("# Instructions"):].strip()
+        if usage_instructions.startswith("'''") and usage_instructions.endswith("'''"):
+            usage_instructions = usage_instructions[3:-3].strip()
 
         # Return the generated usage instructions
         return usage_instructions
-            
-        
             
 
 # if __name__ == "__main__":
