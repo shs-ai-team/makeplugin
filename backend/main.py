@@ -4,8 +4,9 @@ from models import DevResponseNotReady, DevResponseReady, DeveloperMessage
 import os
 from dotenv import load_dotenv
 
-from fastapi import FastAPI, BackgroundTasks
+from fastapi import FastAPI, BackgroundTasks, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import FileResponse
 from uuid import UUID
 import json
 
@@ -117,3 +118,17 @@ def dev_response(session_id: UUID):
             zip_id=latest_message["zip_id"],
             raw_response=latest_message["raw_response"]
         ))
+
+
+@app.get("/session/{session_id}/download_zip/{zip_id}")
+def download_zip(session_id: UUID, zip_id: int):
+
+    zip_path = Session.get_zip_path(str(session_id), zip_id)
+    if not os.path.exists(zip_path):
+        raise HTTPException(status_code=404, detail="File not found")    
+    
+    return FileResponse(
+        path=zip_path,
+        filename=os.path.basename(zip_path),
+        media_type="application/zip",
+    )

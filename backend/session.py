@@ -150,7 +150,12 @@ class Session:
 
         return sessions
 
-
-
-
-
+    @classmethod
+    def get_zip_path(cls, session_id, zip_id: int) -> str:
+        """
+        Returns the absolute path to the zip file for the given session and generation id.
+        """
+        session_folder = os.path.join(cls.SESSIONS_DIR, str(session_id))
+        zip_filename = f"generation_{zip_id}.zip"
+        zip_path = os.path.join(session_folder, zip_filename)
+        return zip_path
