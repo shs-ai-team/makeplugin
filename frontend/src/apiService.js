@@ -85,3 +85,13 @@ export const getDeveloperResponse = (sessionId) => {
 export const getPluginDownloadUrl = (sessionId, zipId) => {
   return `${API_URL}/session/${sessionId}/download_zip/${zipId}`;
 };
+
+
+/**
+ * 6. Retrieves all session IDs.
+ * Corresponds to: GET /sessions
+ * @returns {Promise<string[]>} - An array of session UUIDs.
+ */
+export const getAllSessions = () => {
+  return apiFetch(`${API_URL}/sessions`);
+};

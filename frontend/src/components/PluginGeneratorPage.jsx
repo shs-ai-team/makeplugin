@@ -1,4 +1,5 @@
-import React, { useState, useEffect, useRef } from 'react';
+
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import './PluginGeneratorPage.css';
 // 👇 1. Import all our API service functions
 import * as api from '../apiService';
@@ -17,10 +18,43 @@ const PluginGeneratorPage = () => {
     const [isLoading, setIsLoading] = useState(true); // Start loading initially
     const [isInputDisabled, setIsInputDisabled] = useState(false);
 
+    const [sessions, setSessions] = useState([]);  // sessions history
+
     const chatContainerRef = useRef(null);
 
+    // ADD:
+    const loadSession = async (id) => {
+        setIsLoading(true);
+        try {
+            const data = await api.getSessionMessages(id);
+            setSessionId(data.session_id);
+            setMessages(data.messages || []);
+        } catch (e) {
+            console.error('Failed to load session', e);
+        } finally {
+            setIsLoading(false);
+        }
+    };
+
+
+    const refreshSessions = async () => {
+        try {
+            const list = await api.getAllSessions();
+            setSessions(list || []);
+        } catch (e) {
+            console.error('Failed to load sessions', e);
+        }
+    };
+
+
+    // ADD effect (on first load)
+    useEffect(() => {
+        refreshSessions();
+    }, []);
+
+
     // 👇 3. Function to start a new chat session
-    const startNewChat = async () => {
+    const startNewChat = useCallback(async () => {
         setIsLoading(true);
         setIsInputDisabled(false);
         setInputValue('');
@@ -28,19 +62,21 @@ const PluginGeneratorPage = () => {
             const data = await api.startNewSession();
             setSessionId(data.session_id);
             setMessages(data.messages);
+            await refreshSessions();
         } catch (error) {
             console.error("Failed to start new session:", error);
-            // Optionally, set an error message to display in the UI
-            setMessages([{ role: 'consultant', content: 'Sorry, I couldn\'t connect to the server. Please try again later.' }]);
+            setMessages([
+                { role: 'consultant', content: 'Sorry, I couldn\'t connect to the server. Please try again later.' }
+            ]);
         } finally {
             setIsLoading(false);
         }
-    };
+    }, []); // <- empty dependency array, function won't change
 
     // 👇 4. useEffect to start the session on first load
     useEffect(() => {
         startNewChat();
-    }, []);
+    }, [startNewChat]);
 
     // Handle screen resize (no changes needed here)
     useEffect(() => {
@@ -59,7 +95,7 @@ const PluginGeneratorPage = () => {
             chatContainerRef.current.scrollTop = chatContainerRef.current.scrollHeight;
         }
     }, [messages]);
-    
+
     // 👇 5. useEffect to handle polling for the developer response
     useEffect(() => {
         if (isInputDisabled) {
@@ -114,21 +150,34 @@ const PluginGeneratorPage = () => {
             setIsSidebarOpen(false);
         }
     };
-    
+
     // Helper to render message content, especially for developer messages
     const renderMessageContent = (msg) => {
-        if (msg.role === 'developer' && msg.zip_id) {
+        // Ensure content is a string
+        const contentString = typeof msg.content === 'string' ? msg.content : JSON.stringify(msg.content);
+
+        const content = <ReactMarkdown>{contentString}</ReactMarkdown>;        if (msg.role === 'developer' && msg.zip_id !== undefined && msg.zip_id !== null) {
             const downloadUrl = api.getPluginDownloadUrl(sessionId, msg.zip_id);
             return (
                 <>
-                    <ReactMarkdown> {msg.content} </ReactMarkdown>
-                    <a href={downloadUrl} className="download-button" download>
-                        Download Plugin (.zip)
-                    </a>
+                    {content}
+                    <div className="download-row">
+                        <a
+                            href={downloadUrl}
+                            className="download-button"
+                            download={`generation_${msg.zip_id}.zip`}
+                            // target="_blank"
+                            // rel="noopener noreferrer"
+                            aria-label={`Download plugin generation ${msg.zip_id}`}
+                        >
+                            ⤓ Download Plugin (.zip)
+                        </a>
+
+                    </div>
                 </>
             );
         }
-        return msg.content;
+        return content;
     };
 
     return (
@@ -137,15 +186,24 @@ const PluginGeneratorPage = () => {
             {isSidebarOpen && (
                 <aside className={`sidebar ${isSidebarOpen && isMobile ? 'mobile-visible' : ''}`}>
                     <div className="sidebar-top">
+                        <hr></hr>
                         <h2 className="logo">MakePlugin</h2>
-                        <button className="new-chat" onClick={handleResetChat}>New Plugin Generation</button>
+                        <hr></hr>
+                        <button className="new-chat" onClick={handleResetChat}>Generate A New Plugin</button>
                     </div>
                     <div className="recent-chats">
-                        <h3>Recent Plugin Generations </h3>
-                        <ul>
-                            <li><span className="chat-icon">💬</span> Contact Form Plugin <span className="time">2h ago</span></li>
-                            <li><span className="chat-icon">📅</span> Event Calendar <span className="time">1d ago</span></li>
-                            <li><span className="chat-icon">📄</span> Custom Post Types <span className="time">3d ago</span></li>
+                        <h3> Past Plugin Generations </h3>
+                        <ul className="session-list">
+                            {sessions.map((id, idx) => (
+                                <li
+                                    key={id}
+                                    className={`session-item ${sessionId === id ? 'active' : ''}`}
+                                    onClick={() => loadSession(id)}
+                                >
+                                    <div className="session-title">Session {idx + 1}</div>
+                                    <div className="session-uuid">{id}</div>
+                                </li>
+                            ))}
                         </ul>
                     </div>
                 </aside>
@@ -156,7 +214,7 @@ const PluginGeneratorPage = () => {
                 <div className="plugin-header-box">
                     <div className="header">
                         <h1>Plugin Generation </h1>
-                        <span className="plugin-count">23 plugins remaining this month</span>
+                        {/* <span className="plugin-count">23 plugins remaining this month</span> */}
                         {isMobile && (
                             <button className="toggle-sidebar" onClick={() => setIsSidebarOpen(prev => !prev)}>☰</button>
                         )}
@@ -167,7 +225,10 @@ const PluginGeneratorPage = () => {
                 {/* 👇 7. Updated chat container to use 'messages' state */}
                 <div ref={chatContainerRef} className="chat-container">
                     {messages.map((msg, index) => (
-                        <div key={index} className={msg.role === 'user' ? 'example-prompt' : 'response-box'}>
+                        <div key={index} className={msg.role === 'user' ? 'example-prompt' : msg.role === 'consultant' ? 'response-box consultant' : 'response-box developer'}>
+                            <div className="msg-label">
+                                {msg.role === 'user' ? "You" : msg.role === 'consultant' ? "Consultant Agent" : "Developer Agent"}
+                            </div>
                             {renderMessageContent(msg)}
                         </div>
                     ))}
