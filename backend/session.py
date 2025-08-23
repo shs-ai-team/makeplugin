@@ -2,6 +2,9 @@ import os
 import json
 import uuid
 import zipfile
+from copy import deepcopy
+from models import ConsultantMessage
+
 
 
 class Session:
@@ -37,7 +40,11 @@ class Session:
         self.session_folder = os.path.join(self.SESSIONS_DIR, self.id_)
         os.makedirs(self.session_folder, exist_ok=True)
         self.messages = [
-            {"role": "consultant", "content": "Hi, I am Plugin Pal - your WordPress plugin assistant!\n To begin, please describe the plugin you want to create."}
+            ConsultantMessage(
+                content="Hi, I am Plugin Pal - your WordPress plugin assistant!\n To begin, please describe the plugin you want to create.",
+                requirements_finalized=False,
+                requirements={}
+            ).model_dump()
         ]
         self.save_messages()
 
@@ -59,7 +66,7 @@ class Session:
 
 
     def get_messages(self):
-        return self.messages
+        return deepcopy(self.messages)
     
     @staticmethod
     def save_plugin_files_zip(session_folder, plugin_files: dict):
@@ -80,7 +87,7 @@ class Session:
 
         return generation_id
 
-    def add_development_result(self, plugin_files: dict, usage_instructions: str=None):
+    def add_development_result(self, plugin_files: dict, usage_instructions: str, raw_response: str):
 
         if plugin_files == {}:
             # Add (failiure) developer role message
@@ -88,6 +95,7 @@ class Session:
                 role="developer",
                 content="Sorry I was unable to create the files, please try again.",
                 zip_id=-1,
+                raw_response=raw_response
             )
         else:
             # Save plugin files as zip to session folder
@@ -99,10 +107,30 @@ class Session:
                 role="developer",
                 content=dev_message,
                 zip_id=generation_id,
+                raw_response=raw_response
             )
 
     @classmethod
-    def get_all_sessions(cls):
+    def get_all_session_ids(cls):
+        """
+        Returns a list of all session UUIDs.
+        """
+        session_ids = []
+        if not os.path.exists(cls.SESSIONS_DIR):
+            return session_ids
+
+        for session_id in os.listdir(cls.SESSIONS_DIR):
+            session_folder = os.path.join(cls.SESSIONS_DIR, session_id)
+            if os.path.isdir(session_folder):
+                session_ids.append(session_id)
+
+        return session_ids
+
+    @classmethod
+    def get_all_session_data(cls):
+        """
+        Returns full session data including id and messages 
+        """
         sessions = []
         if not os.path.exists(cls.SESSIONS_DIR):
             return sessions

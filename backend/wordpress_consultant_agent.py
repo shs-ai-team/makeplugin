@@ -11,9 +11,7 @@ from session import Session
 class WordPressConsultantAgent:
 
     @staticmethod
-    def consult(user_message: str, session: Session):
-    # def consult(self, user_message):
-        # self.messages.append({"role": "user", "content": user_message})
+    def consult(user_message: str, session: Session) -> ConsultantMessage:
         
         # Add user message to session
         user_message = UserMessage(content=user_message)
@@ -21,7 +19,24 @@ class WordPressConsultantAgent:
 
         # Form messages for AI call
         messages = session.get_messages()
-        # TODO: trim messages history 
+        # TODO: trim messages history
+
+        # modify `content` of each `consultant` message to packed expected output format for the AI call
+        for message in messages:
+            if message["role"] == "consultant":
+
+                # pack
+                _response_to_user = message["content"]
+                _requirements = message["requirements"]
+                _requirements_finalized = message["requirements_finalized"]
+                _content_json = json.dumps({
+                    "requirements_finalized": _requirements_finalized,
+                    "requirements": _requirements,
+                    "response_to_user": _response_to_user
+                }, indent=2)
+
+                message["content"] = f"```json\n{_content_json}\n```"
+                
         messages.insert(0, SystemMessage(content=wordpress_consultant_agent_system_prompt).model_dump())
 
         response = AI.get_response(messages)
@@ -41,16 +56,20 @@ class WordPressConsultantAgent:
                 "response_to_user": "There was an error processing your request. Please try again."
             }
         
-        # self.messages.append({"role": "consultant", "content": response})
         # Add new AI response to session
-        new_message = ConsultantMessage(content=f"```json\n{json.dumps(response_json, indent=2)}```", requirements_finalized=response_json["requirements_finalized"])
+        new_ai_message = ConsultantMessage(
+            content=response_json["response_to_user"],
+            requirements_finalized=response_json["requirements_finalized"],
+            requirements=response_json["requirements"]
+        )
         session.add_message(
-            role=new_message.role,
-            content=new_message.content,
-            requirements_finalized=new_message.requirements_finalized
+            role=new_ai_message.role,
+            content=new_ai_message.content,
+            requirements_finalized=new_ai_message.requirements_finalized,
+            requirements=new_ai_message.requirements
         )
 
-        return response_json
+        return new_ai_message
     
     # def get_requirements(self):
     #     """

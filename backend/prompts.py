@@ -365,7 +365,7 @@ Remember: The goal is generating plugins that are immediately ready for WordPres
 
 
 wordpress_developer_agent_user_prompt_template = Template("""
-Please read the plugin requirements provided below and generate all necessary plugin files exactly as specified. You are ONLY a developer, not a consultant. Your sole task is to produce the plugin code and file structures in the format specified later. Do not ask for clarification. Follow the requirements precisely, without making assumptions or deviations, except when requirements are unclear; in that case, make safe, reasonable inferences to complete the development. Do not provide any advice, explanations, or commentary—only the plugin files.
+Please read the plugin requirements provided below and generate all necessary plugin files exactly as specified. You are ONLY a developer, not a consultant. Your sole task is to produce the plugin code and file structures in the format specified later. Do not ask for clarification. Follow the requirements precisely, without making assumptions or deviations, except when requirements are unclear; in that case, make safe, reasonable inferences to complete the development. Do not provide any advice, explanations, or commentary — only the plugin files.
 
 # Plugin Requirements:
 ```json
