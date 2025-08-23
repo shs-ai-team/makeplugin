@@ -5,7 +5,8 @@ from uuid import UUID
 
 class ConsultantMessage(BaseModel):
     role: Literal["consultant"] = "consultant"
-    content: str
+    content: str  # `response_to_user` key from raw AI response 
+    requirements: dict
     requirements_finalized: bool = False
 
 
@@ -13,6 +14,7 @@ class DeveloperMessage(BaseModel):
     role: Literal["developer"] = "developer"
     content: str
     zip_id: int
+    raw_response: str
 
 
 class UserMessage(BaseModel):

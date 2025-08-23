@@ -69,23 +69,20 @@ def consultant_response(session_id: UUID, user_input: UserInputRequest, backgrou
     
     session = Session(session_id=str(session_id))
 
-    ai_response: dict = WordPressConsultantAgent.consult(user_message=user_input.message, session=session)
+    ai_response: ConsultantMessage = WordPressConsultantAgent.consult(user_message=user_input.message, session=session)
 
-    requirements_finalized: bool = ai_response["requirements_finalized"] == True
+    requirements_finalized: bool = ai_response.requirements_finalized == True
     
     print(f"LOG: Requirements finalized: {requirements_finalized}.")
     if requirements_finalized:
-        requirements = ai_response["requirements"]
+        requirements = ai_response.requirements
 
         # start development through developer agent asyncronously
         print(f"LOG: Begining AI dev task")
         background_tasks.add_task(WordpressDeveloperAgent.generate_plugin_files, requirements, session)
     
     return ConsultantResponse(
-        message=ConsultantMessage(
-            content=str(json.dumps(ai_response, indent=2)),
-            requirements_finalized=requirements_finalized,
-        ),
+        message=ai_response,
     )
 
     
@@ -109,5 +106,6 @@ def dev_response(session_id: UUID):
     
     return DevResponseReady(message=DeveloperMessage(
             content=latest_message["content"],
-            zip_id=latest_message["zip_id"]
+            zip_id=latest_message["zip_id"],
+            raw_response=latest_message["raw_response"]
         ))
