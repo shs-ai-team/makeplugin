@@ -1,7 +1,8 @@
 
 # Developer plugin generation status endpoint
 from models import DevResponseNotReady, DevResponseReady, DeveloperMessage
-
+import os
+from dotenv import load_dotenv
 
 from fastapi import FastAPI, BackgroundTasks
 from fastapi.middleware.cors import CORSMiddleware
@@ -24,8 +25,17 @@ from wordpress_developer_agent import WordpressDeveloperAgent
 
 app = FastAPI()
 
+# Get the frontend URL from an environment variable
+# Provide a default for local development
+frontend_url = os.getenv("FRONTEND_URL", "http://localhost:3000")
+
+# This is the list of approved origins
+origins = [
+    frontend_url,
+]
+
 # allow frontend server to talk to this backend
-# TODO: adjust according to frontend details
+# need to adjust according to frontend details
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],

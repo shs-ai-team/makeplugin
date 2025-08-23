@@ -17,7 +17,7 @@ An AI chatbot that guides users without programming knowledge through the creati
 
 **Problem:** Extending WordPress websites with custom plugins typically requires in-depth knowledge of PHP and the WordPress architecture. This technical barrier excludes many website operators, designers, and content creators who have a clear idea of a needed function but lack the programming skills to implement it. The solution often involves expensive developers or a tedious search for unsuitable standard plugins.
 
-**Our Solution:** "Plugin Pal" is an innovative web application that revolutionizes this process. Using an intuitive chat interface, the user describes in natural language what their plugin should do. Our AI backend, powered by a high-performance Large Language Model (LLM), analyzes the requirements, asks clarifying questions if necessary, and generates the complete, clean code for the WordPress plugin in the background.
+**Our Solution:** "makeplugin" is an innovative web application that revolutionizes this process. Using an intuitive chat interface, the user describes in natural language what their plugin should do. Our AI backend, powered by a high-performance Large Language Model (LLM), analyzes the requirements, asks clarifying questions if necessary, and generates the complete, clean code for the WordPress plugin in the background.
 
 **Target Audience:** We are targeting WordPress administrators, small business owners, bloggers, and web designers—in short, anyone who wants to personalize their website without having to write code themselves. Our tool can also serve as a rapid prototyping aid for junior developers.
 
