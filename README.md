@@ -11,7 +11,7 @@ Project repository for the lablab.ai and AI/ML API co-create-with-GPT5 Hackathon
 MakePlugin – AI-Powered WordPress Plugin Generator
 
 **Short Description (under 255 characters):**
-AI-powered no-code custom WordPress plugins generator. Just chat with our consultant to refine your idea, and get a download ready-to-install plugin zip.
+Turn your plugin ideas into WordPress plugins in minutes. Chat with our AI consultant, finalize requirements, and download your custom plugin ZIP—no coding needed. 
 
 **Detailed Description (over 100 words):**
 
