@@ -53,6 +53,16 @@
   text-align: center;
 } */
 
+.close-sidebar {
+    background: none;
+    border: none;
+    font-size: 24px;
+    color: silver;
+    cursor: pointer;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+}
 
 .input-wrapper {
   bottom: 0;
@@ -119,11 +129,12 @@
   font-size: 1rem;
   color: #666;
   margin-bottom: 0.5rem;
+  margin-left: 3%;
 }
 
 .recent-chats ul {
   list-style: none;
-  padding: 0;
+  padding: 18px;
 }
 
 .recent-chats li {
@@ -336,6 +347,9 @@
 
 /* Responsive */
 @media (max-width: 768px) {
+  .recent-chats{
+    width: 100vh;
+  }
   .layout {
     flex-direction: column;
   }
@@ -366,7 +380,7 @@
     overflow-y: auto;
     background-color: var(--bg-color);
     z-index: var(--overlay-z);
-    padding: 1.5rem;
+    padding: 0rem;
     box-shadow: 0 0 12px rgba(0, 0, 0, 0.1);
   }
 
