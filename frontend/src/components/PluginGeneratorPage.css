@@ -135,6 +135,7 @@
 .recent-chats ul {
   list-style: none;
   padding: 18px;
+  max-height: 46vh;
 }
 
 .recent-chats li {
