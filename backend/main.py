@@ -132,3 +132,45 @@ def download_zip(session_id: UUID, zip_id: int):
         filename=os.path.basename(zip_path),
         media_type="application/zip",
     )
+
+
+# --------- FOR FRONTEND HOSTING --------------
+from pathlib import Path
+from fastapi import Request
+from fastapi.responses import FileResponse
+from fastapi.staticfiles import StaticFiles
+
+# Base dir: /app (container), adjust according to your structure
+BASE_DIR = Path(__file__).resolve().parent.parent  # -> repo root (/app)
+FRONTEND_BUILD = BASE_DIR / "frontend" / "build"
+INDEX_FILE = FRONTEND_BUILD / "index.html"
+
+if FRONTEND_BUILD.exists() and INDEX_FILE.exists():
+    # Serve static assets (React build puts hashed assets in build/static)
+    static_dir = FRONTEND_BUILD / "static"
+    if static_dir.exists():
+        app.mount("/static", StaticFiles(directory=str(static_dir)), name="static")
+
+    @app.get("/{full_path:path}")
+    async def spa_router(request: Request, full_path: str):
+        """
+        If requested file exists in build, serve it.
+        Otherwise return index.html so React Router takes over.
+        """
+        # Root path
+        if full_path == "" or full_path is None:
+            return FileResponse(str(INDEX_FILE))
+
+        candidate = FRONTEND_BUILD / full_path
+
+        # If it's a directory, serve index.html (SPA)
+        if candidate.is_dir():
+            return FileResponse(str(INDEX_FILE))
+
+        # If file exists (e.g. /favicon.ico or /static/js/xxx.js), serve it
+        if candidate.exists():
+            return FileResponse(str(candidate))
+
+        # Otherwise serve index.html for SPA route
+        return FileResponse(str(INDEX_FILE))
+# ---------------------------------------------------------
