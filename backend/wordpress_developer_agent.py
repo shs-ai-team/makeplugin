@@ -1,9 +1,9 @@
 import json
-from ai import AI
-from prompts import wordpress_developer_agent_system_prompt, wordpress_developer_agent_user_prompt_template
-from session import Session
-from models import UserMessage
-from wordpress_consultant_agent import WordPressConsultantAgent
+from .ai import AI
+from .prompts import wordpress_developer_agent_system_prompt, wordpress_developer_agent_user_prompt_template
+from .session import Session
+from .models import UserMessage
+from .wordpress_consultant_agent import WordPressConsultantAgent
 
 
 class WordpressDeveloperAgent:

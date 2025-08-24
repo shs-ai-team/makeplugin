@@ -3,7 +3,7 @@ import json
 import uuid
 import zipfile
 from copy import deepcopy
-from models import ConsultantMessage
+from .models import ConsultantMessage
 
 
 

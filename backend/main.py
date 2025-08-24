@@ -1,6 +1,6 @@
 
 # Developer plugin generation status endpoint
-from models import DevResponseNotReady, DevResponseReady, DeveloperMessage
+from .models import DevResponseNotReady, DevResponseReady, DeveloperMessage
 import os
 from dotenv import load_dotenv
 
@@ -10,8 +10,8 @@ from fastapi.responses import FileResponse
 from uuid import UUID
 import json
 
-from session import Session
-from models import (
+from .session import Session
+from .models import (
     CreateSessionResponse,
     GetSessionResponse,
     UserInputRequest,
@@ -21,8 +21,8 @@ from models import (
     UserMessage,
     ConsultantMessage,
 )
-from wordpress_consultant_agent import WordPressConsultantAgent
-from wordpress_developer_agent import WordpressDeveloperAgent   
+from .wordpress_consultant_agent import WordPressConsultantAgent
+from .wordpress_developer_agent import WordpressDeveloperAgent   
 
 app = FastAPI()
 

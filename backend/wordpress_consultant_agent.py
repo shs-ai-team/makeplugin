@@ -1,12 +1,12 @@
 import json
-from ai import AI
-from prompts import (
+from .ai import AI
+from .prompts import (
     wordpress_consultant_agent_system_prompt,
     wordpress_plugin_usage_instructions_generator_system_prompt,
     wordpress_plugin_usage_instructions_generator_user_prompt_template
 )
-from models import SystemMessage, UserMessage, ConsultantMessage
-from session import Session
+from .models import SystemMessage, UserMessage, ConsultantMessage
+from .session import Session
 
 class WordPressConsultantAgent:
 
