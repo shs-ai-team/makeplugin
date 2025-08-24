@@ -1,0 +1,10 @@
+{
+  "messages": [
+    {
+      "role": "consultant",
+      "content": "Hi, I am Plugin Pal - your WordPress plugin assistant!\n To begin, please describe the plugin you want to create.",
+      "requirements": {},
+      "requirements_finalized": false
+    }
+  ]
+}

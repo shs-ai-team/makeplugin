@@ -1,0 +1,14 @@
+{
+  "messages": [
+    {
+      "role": "consultant",
+      "content": "Hi, I am Plugin Pal - your WordPress plugin assistant!\n To begin, please describe the plugin you want to create.",
+      "requirements": {},
+      "requirements_finalized": false
+    },
+    {
+      "role": "user",
+      "content": "Build me a plugin that shows the weather data in Switzerland for the next few days"
+    }
+  ]
+}

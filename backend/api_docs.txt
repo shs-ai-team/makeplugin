@@ -1,0 +1,118 @@
+MakePlugin API Documentation
+Base URL: /
+All endpoints assume session_id is a UUID where applicable.
+
+1. Create New Chat Session
+Endpoint: POST /session
+Description: Creates a new plugin chat session and returns the initial AI (consultant) message. Usage: Called when a user opens the app to start a new plugin conversation, or clicks “new chat/ new plugin” button.
+Request Body: None
+Response (200 OK):
+{
+  "session_id": "uuid",
+  "messages": [
+    {
+      "role": "consultant",
+      "content": "Hi! Tell me what plugin you want to create…"
+    }
+  ]
+}
+
+2. Get Session Messages
+Endpoint: GET /session/{session_id}
+Description: Retrieves all messages within a session, including consultant, user, and developer messages.
+Usage: To open an old/existing chat.
+Request Body: None
+Response (200 OK):
+{
+  "session_id": "uuid",
+  "messages": [
+    {
+      "role": "consultant",
+      "content": "Hi! Tell me what plugin you want to create…",
+      "requirements_finalized": false
+    },
+    {
+      "role": "user",
+      "content": "I want a plugin that does..."
+    },
+    {
+      "role": "developer",
+      "content": "Here's your developed WordPress plugin zip, ready to install!",
+      "zip_id": 0
+    }
+  ]
+}
+Notes:
+3 message roles:
+Consultant or Developer - AI messages
+User - User messages
+requirements_finalized key will appear in all “consultant” role messages. Indicates whether the consultant has finalized the plugin requirements. The frontend can use this flag to enable or disable user input.
+zip_id key will be present in all developer role messages. Frontend can use the value to get zip file using the zip downloading endpoint (see API #5 for details)
+
+3. Send User Message To Get Consultant Response
+Endpoint: POST /session/{session_id}/consultant_response
+Description: Sends a new user message to the consultant and returns the consultant’s response.
+Usage: Called each time the user submits a message in the chat interface, to get AI response.
+Request Body:
+{
+  "message": "User input text"
+}
+
+Response (200 OK):
+{
+  "message": {
+    "role": "consultant",
+    "content": "Consultant reply",
+    "requirements_finalized": false/true
+  }
+}
+Notes:
+requirements_finalized Indicates whether the consultant has finalized the plugin requirements. IF true, frontend should disable user input, show loading for next (developer) message, and start polling the dev_response endpoint (see API # 4 for details)
+
+4. Get Developer Plugin Generation Status
+Endpoint: POST /session/{session_id}/dev_response
+Description: Checks whether the developer has finished generating the plugin zip. The frontend can poll this endpoint repeatedly until the plugin is ready.
+Request Parameters:
+session_id (path, required) — UUID of the session.
+
+
+Request Body:
+ None
+Response (200 OK, Plugin Not Ready):
+{
+  "success": false
+}
+Response (200 OK, Success, plugin ready):
+{
+  "success": true,
+  "message": {
+    "role": "developer",
+    "content": "Here’s your plugin ready to download and install!",
+    "zip_id": false/true
+  }
+}
+
+
+Notes:
+This endpoint should only be called after requirements_finalized=true in the latest consultant message.
+
+
+The frontend should display a loader while polling until success: true. (with a cooldown timer)
+When it gets  success: true., then it should show the developer message, and the zip as a downloadable below it. To fetch zip, call API #5 given below, using  the provided zip id 
+
+
+
+5. Download Plugin ZIP
+Endpoint: GET /session/{session_id}/download_zip/{zip_id}
+Description: Streams the generated plugin ZIP file for download.
+Usage: Called dynamically by the frontend when the user clicks “Download Plugin.”
+Request Body:None
+Response (200 OK):
+Content-Type: application/zip
+Headers:
+ Content-Disposition: attachment; filename=generation_<zip_id>.zip
+Body: Binary ZIP stream
+
+
+
+
