@@ -150,6 +150,10 @@ const PluginGeneratorPage = () => {
             setIsSidebarOpen(false);
         }
     };
+    const handleCloseSidebar = () => {
+    setIsSidebarOpen(false);
+    };
+
 
     // Helper to render message content, especially for developer messages
     const renderMessageContent = (msg) => {
@@ -188,6 +192,7 @@ const PluginGeneratorPage = () => {
                     <div className="sidebar-top">
                         <hr></hr>
                         <h2 className="logo">MakePlugin</h2>
+                        <button className="close-sidebar" onClick={handleCloseSidebar}>×</button>
                         <hr></hr>
                         <button className="new-chat" onClick={handleResetChat}>Generate A New Plugin</button>
                     </div>
