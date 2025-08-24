@@ -1,0 +1,38 @@
+{
+  "messages": [
+    {
+      "role": "consultant",
+      "content": "Hi, I am Plugin Pal - your WordPress plugin assistant!\n To begin, please describe the plugin you want to create.",
+      "requirements": {},
+      "requirements_finalized": false
+    },
+    {
+      "role": "user",
+      "content": "i wanta  brocode generator"
+    },
+    {
+      "role": "consultant",
+      "content": "Great idea! To tailor this, would you like visitors to submit their own rules for approval, and do you want the generator on one dedicated page or usable anywhere on the site? Also, should the tone be strictly family\u2011friendly or anything goes?",
+      "requirements_finalized": false,
+      "requirements": {
+        "name": "Brocode Generator",
+        "description": "Generates random \u2018Bro Code\u2019 rules with a simple front-end button and an admin-manageable list.",
+        "details": "Provide a simple generator on a page that shows one random \u2018Bro Code\u2019 rule when the user clicks a button. Include a copy-to-clipboard action and basic, bold fun styling. In the admin, allow adding, editing, deleting, and reordering rules in a list; ship with a small starter set. Include a toggle to allow visitor submissions via a small form; submitted entries are held for approval before appearing. Keep everything lightweight and fast, with a single easy way to place the generator on a page."
+      }
+    },
+    {
+      "role": "user",
+      "content": "fish and foes"
+    },
+    {
+      "role": "consultant",
+      "content": "Got it\u2014when you say \u201cfish and foes,\u201d do you want that as the plugin\u2019s name/theme, or do you want two categories of rules (Fish and Foes) to generate from? Also, should visitors be able to submit rules for approval, and do you want the generator placed on a single page or usable anywhere on your site?",
+      "requirements_finalized": false,
+      "requirements": {
+        "name": "Brocode Generator",
+        "description": "Generates random \u2018Bro Code\u2019 rules with a simple front-end button and an admin-manageable list.",
+        "details": "Provide a simple generator on a page that shows one random \u2018Bro Code\u2019 rule when the user clicks a button. Include a copy-to-clipboard action and bold, playful styling. In the admin, allow adding, editing, deleting, and reordering rules in a list; ship with a small starter set. Include a toggle to allow visitor submissions via a small form; submitted entries are held for approval before appearing. Keep everything lightweight and fast, with a single easy way to place the generator on a page."
+      }
+    }
+  ]
+}

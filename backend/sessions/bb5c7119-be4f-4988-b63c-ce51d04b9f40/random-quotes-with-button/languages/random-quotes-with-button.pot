@@ -1,0 +1,125 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Random Quotes with Button 1.0.0\n"
+"POT-Creation-Date: 2025-08-22 00:00+0000\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: makeplugin\n"
+"Language: \n"
+
+#: random-quotes-with-button.php:0
+msgid "Random Quotes with Button"
+msgstr ""
+
+#: includes/class-rqwb.php:0
+msgid "New Quote"
+msgstr ""
+
+#: includes/class-rqwb.php:0
+msgid "Get a new random quote"
+msgstr ""
+
+#: includes/class-rqwb.php:0
+msgid "The only limit to our realization of tomorrow is our doubts of today."
+msgstr ""
+
+#: includes/class-rqwb.php:0
+msgid "Franklin D. Roosevelt"
+msgstr ""
+
+#: includes/class-rqwb.php:0
+msgid "In the middle of difficulty lies opportunity."
+msgstr ""
+
+#: includes/class-rqwb.php:0
+msgid "Albert Einstein"
+msgstr ""
+
+#: includes/class-rqwb.php:0
+msgid "Do what you can, with what you have, where you are."
+msgstr ""
+
+#: includes/class-rqwb.php:0
+msgid "Theodore Roosevelt"
+msgstr ""
+
+#: includes/class-rqwb.php:0
+msgid "It always seems impossible until it’s done."
+msgstr ""
+
+#: includes/class-rqwb.php:0
+msgid "Nelson Mandela"
+msgstr ""
+
+#: includes/class-rqwb.php:0
+msgid "Simplicity is the ultimate sophistication."
+msgstr ""
+
+#: includes/class-rqwb.php:0
+msgid "Leonardo da Vinci"
+msgstr ""
+
+#: includes/class-rqwb.php:0
+msgid "Well begun is half done."
+msgstr ""
+
+#: includes/class-rqwb.php:0
+msgid "Aristotle"
+msgstr ""
+
+#: includes/class-rqwb.php:0
+msgid "Success is not final, failure is not fatal: it is the courage to continue that counts."
+msgstr ""
+
+#: includes/class-rqwb.php:0
+msgid "Winston Churchill"
+msgstr ""
+
+#: includes/class-rqwb.php:0
+msgid "If you want to go fast, go alone. If you want to go far, go together."
+msgstr ""
+
+#: includes/class-rqwb.php:0
+msgid "African Proverb"
+msgstr ""
+
+#: includes/class-rqwb.php:0
+msgid "The best way to predict the future is to create it."
+msgstr ""
+
+#: includes/class-rqwb.php:0
+msgid "Peter Drucker"
+msgstr ""
+
+#: includes/class-rqwb.php:0
+msgid "We are what we repeatedly do. Excellence, then, is not an act, but a habit."
+msgstr ""
+
+#: includes/class-rqwb.php:0
+msgid "Will Durant"
+msgstr ""
+
+#: includes/class-rqwb.php:0
+msgid "Happiness is not something ready made. It comes from your own actions."
+msgstr ""
+
+#: includes/class-rqwb.php:0
+msgid "Dalai Lama"
+msgstr ""
+
+#: includes/class-rqwb.php:0
+msgid "Act as if what you do makes a difference. It does."
+msgstr ""
+
+#: includes/class-rqwb-widget.php:0
+msgid "Displays a random quote with a refresh button."
+msgstr ""
+
+#: includes/class-rqwb-widget.php:0
+msgid "Random Quote"
+msgstr ""
+
+#: includes/class-rqwb-widget.php:0
+msgid "Title:"
+msgstr ""

@@ -1,0 +1,24 @@
+{
+  "messages": [
+    {
+      "role": "consultant",
+      "content": "Hi, I am Plugin Pal - your WordPress plugin assistant!\n To begin, please describe the plugin you want to create.",
+      "requirements": {},
+      "requirements_finalized": false
+    },
+    {
+      "role": "user",
+      "content": "I want a feedback form plugin. It should have 2 fields: Name and Message (limited to 150 words). The feedbacks can be given by anyone, and persist. below the form all the feedbacks anyone ever has submitted should be shown in a listview. Design it minimalisticlally and user friendly."
+    },
+    {
+      "role": "consultant",
+      "content": "Great\u2014got it. We\u2019ll build a simple, minimal feedback form (Name + Message with a 150-word limit) that anyone can submit, and all submissions will appear below the form in a clean list. I\u2019ll start the plugin generation now\u2014please hold on while we create it.",
+      "requirements_finalized": true,
+      "requirements": {
+        "name": "Simple Feedback Board",
+        "description": "Minimal public feedback form with a persistent list below.",
+        "details": "Provide a clean, minimal feedback form with two required fields: Name and Message. The Message must be limited to 150 words (validate and show a friendly warning if exceeded). Anyone can submit without logging in. Submissions are saved and displayed immediately below the form in a simple, readable list showing Name and Message, ordered with the newest first. Show clear success and error messages. Keep the layout minimal, responsive, and accessible, with subtle styling that fits most themes. Include a simple way to place the form-and-list on a page. No moderation, no pagination, and no extra fields or settings unless essential for this scope."
+      }
+    }
+  ]
+}

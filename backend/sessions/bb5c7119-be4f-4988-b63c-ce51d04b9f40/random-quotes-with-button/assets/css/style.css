@@ -1,0 +1,5 @@
+/* Minimal, theme-friendly styles */
+.rqwb-quote-box { margin: 1em 0; }
+.rqwb-quote { margin: 0 0 0.5em 0; padding: 0; }
+.rqwb-quote-author { display: block; margin-top: 0.25em; opacity: 0.8; }
+.rqwb-button { cursor: pointer; }
