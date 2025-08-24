@@ -2,7 +2,7 @@
 
 // Retrieve the base URL for the API from environment variables.
 // This makes the code portable between development and production environments.
-const API_URL = process.env.REACT_APP_API_URL;
+const API_URL = process.env.REACT_APP_API_URL || "https://makeplugin.onrender.com";
 
 /**
  * Handles common fetch logic, including error handling.
