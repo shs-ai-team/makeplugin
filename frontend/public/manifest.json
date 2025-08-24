@@ -1,6 +1,6 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "MakePlugin",
+  "name": "MakePlugin - AI Wordpress Plugins Maker",
   "icons": [
     {
       "src": "makeplugin_logo.jpg",
